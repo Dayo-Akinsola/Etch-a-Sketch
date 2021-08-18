@@ -1,6 +1,9 @@
+const container = document.querySelector('.container');
+let squares = container.querySelectorAll('.square');
+
 // Creates a intxint grid
 const createGrid = (int) => {
-    const squares = document.querySelectorAll('.square');
+    squares = document.querySelectorAll('.square');
     squares.forEach(square => square.remove());
     for (let i = 0; i < int*int; i++){
         let div = document.createElement('div');
@@ -12,14 +15,14 @@ const createGrid = (int) => {
     }
 }
 
-const container = document.querySelector('.container');
-const squares = container.querySelectorAll('.square');
+
 let dimensionsChoice = 16;
 createGrid(dimensionsChoice);
 
 
 //Changes the color of a box when hovered.
 const colorChange = () =>{
+    squares = document.querySelectorAll('.square');
     squares.forEach(square => square.addEventListener('mouseover', (event) => {
     event.target.classList.add("redTransition");
     console.log(event.target)
@@ -44,6 +47,7 @@ dimensionsButton.addEventListener('click', (event) => {
         dimensionsChoice = prompt('Please enter an number between 2 - 100.')
     }
     createGrid(parseInt(dimensionsChoice));
+
 })
 
 
