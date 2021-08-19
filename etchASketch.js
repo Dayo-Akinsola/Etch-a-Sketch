@@ -1,5 +1,12 @@
 const container = document.querySelector('.container');
 
+const getRandomColor = () => {
+    const randomColor = Math.floor(Math.random()*16777215).toString(16);
+    return '#' + randomColor;
+}
+
+
+
 // Creates a intxint grid
 const createGrid = (int) => {
     const squares = document.querySelectorAll('.square');
@@ -23,7 +30,11 @@ const resetGrid = () => {
     const resetButton = document.querySelector('#resetButton');
     const squares = document.querySelectorAll('.square');
     resetButton.addEventListener('click', (event) => {
-        squares.forEach(square => square.classList.remove('randomColor'))
+        squares.forEach(square => {
+            square.style.backgroundColor = 'white';
+            square.classList.remove('randomColor');  
+            square.classList.remove('blackTransition');          
+        });
     })
 }
 resetGrid();
@@ -33,15 +44,12 @@ resetGrid();
 const colorChangeBlack = () =>{
     const squares = document.querySelectorAll('.square');
     squares.forEach(square => square.addEventListener('mouseover', (event) => {
+    event.target.classList.remove("randomColor");
     event.target.classList.add("blackTransition");
 }))
 }
 
-const getRandomColor = () => {
-    const randomColor = Math.floor(Math.random()*16777215).toString(16);
-    return '#' + randomColor;
-}
-
+//Changes color of a box to a random color when hovered.
 const colorChangeRandom = () => {
     const squares = document.querySelectorAll('.square');
     squares.forEach(square => square.addEventListener('mouseover', (event) => {
@@ -50,6 +58,32 @@ const colorChangeRandom = () => {
         event.target.style.backgroundColor = randomColor;
     }))
 }
+
+const colorChanges = [colorChangeBlack, colorChangeRandom];
+
+// variable to control which color mode the hover is on
+let color = 0;
+
+const changeColorChoice = () => {
+    const rainbowButton = document.querySelector('#rainbowMode');
+    const blackButton = document.querySelector('#blackMode');
+
+    rainbowButton.addEventListener('click', (event) => {
+        console.log(event.target);
+        color = 1;
+        console.log(color)
+        colorChanges[color]();
+    })
+
+    blackButton.addEventListener('click', (event) => {
+        console.log(event.target);
+        color = 0;
+        console.log(color);
+        colorChanges[color]();
+    })
+}
+
+changeColorChoice();
 
 const dimensionsButton = document.querySelector('#gridDimensions');
 dimensionsButton.addEventListener('click', (event) => {
@@ -60,11 +94,11 @@ dimensionsButton.addEventListener('click', (event) => {
     if (dimensionsChoice){
         createGrid(parseInt(dimensionsChoice));
     }
-    colorChangeRandom();
+    colorChanges[color]();
     resetGrid();
 })
 
-colorChangeRandom();
+colorChanges[color]();
 
 
 
