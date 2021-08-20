@@ -69,16 +69,16 @@ const changeColorChoice = () => {
     const blackButton = document.querySelector('#blackMode');
 
     rainbowButton.addEventListener('click', (event) => {
-        console.log(event.target);
         color = 1;
-        console.log(color)
+        blackButton.classList.remove('clicked');
+        rainbowButton.classList.add('clicked');
         colorChanges[color]();
     })
 
     blackButton.addEventListener('click', (event) => {
-        console.log(event.target);
         color = 0;
-        console.log(color);
+        rainbowButton.classList.remove('clicked');
+        blackButton.classList.add('clicked');
         colorChanges[color]();
     })
 }
