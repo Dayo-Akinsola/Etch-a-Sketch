@@ -2,18 +2,31 @@
 
 <html>
     <head>
-        <title>Etch a Skecth</title>
+        <title>Etch a Sketch</title>
         <link rel="stylesheet" href="style.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Rampart+One&display=swap" rel="stylesheet">
     </head>
     <script type="module" src="etchASketch.js" defer></script>
 
     <body>
         <h1 class="main-title">Etch-A-Sketch</h1>
+        <div class="main-content">
         <div class="buttons">
-            <button id="gridDimensions">Dimensions</button>
-            <button id="rainbowMode">Raninbow</button>
-            <button id="blackMode">Black</button>
-            <button id="resetButton">Reset</button>
+            <button id="gridDimensions" class="button">Size</button>
+            <button id="rainbowMode" class="button">Rainbow</button>
+            <button id="blackMode" class="button">Black</button>
+            <button id="resetButton" class="button">Reset</button>
+        </div>
+        <div class="slider-container">
+            <div class="resize">
+                <h2>Resize</h2>
+                <input type="range" min="2" max="100" value="16" class="slider" id="myRange" />
+            </div>
+            <div class="resize">
+                <h2>Border Width</h2>
+                <input type="range" min="0" max="10" value="0.1" class="slider" id="myRange" />
+            </div>
+        </div>
         </div>
         <div class="container">
             
