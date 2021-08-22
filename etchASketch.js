@@ -5,6 +5,32 @@ const getRandomColor = () => {
     return '#' + randomColor;
 }
 
+//Event listeners to change grid dimensions and line thickness
+const changeSize = () => {
+    const sliders = document.querySelectorAll('.resize input');
+    const squares = document.querySelectorAll('.square');
+    sliders.forEach(slider => {
+        slider.addEventListener('input', (event) => {
+            if (event.target.id === 'gridSize'){
+                createGrid(parseInt(event.target.value));
+                document.querySelector('#dimensions p').textContent = `${event.target.value} x ${event.target.value}`;
+            }
+
+            if (event.target.id === 'borderWidth'){
+                squares.forEach(square => {
+                    square.style.borderWidth = `${event.target.value}px`;
+                    if (event.target.value === '1'){
+                        document.querySelector('#lineThickness p').textContent = `${event.target.value} pixel`
+                    }
+                    else{
+                        document.querySelector('#lineThickness p').textContent = `${event.target.value} pixels`
+                    }
+                })
+            }
+        })
+    })
+}
+
 
 
 // Creates a intxint grid
@@ -20,6 +46,8 @@ const createGrid = (int) => {
         container.appendChild(div);
     }
 }
+
+
 
 
 let dimensionsChoice = 16;
@@ -85,19 +113,8 @@ const changeColorChoice = () => {
 
 changeColorChoice();
 
-const dimensionsButton = document.querySelector('#gridDimensions');
-dimensionsButton.addEventListener('click', (event) => {
-    dimensionsChoice = prompt('Please enter a number between 2 - 100.');
-    while (parseInt(dimensionsChoice) > 100 || parseInt(dimensionsChoice) < 2 || isNaN(dimensionsChoice)){
-        dimensionsChoice = prompt('Please enter an number between 2 - 100.')
-    }
-    if (dimensionsChoice){
-        createGrid(parseInt(dimensionsChoice));
-    }
-    colorChanges[color]();
-    resetGrid();
-})
 
+changeSize();
 colorChanges[color]();
 
 
