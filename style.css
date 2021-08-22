@@ -12,6 +12,13 @@ h2{
     margin-bottom: 8px;
 }
 
+p{
+    text-align: center;
+    font-family: 'Rampart One', cursive;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 .container{
     display: grid;
     margin-top: -210px;
@@ -30,7 +37,7 @@ h2{
 
 .square{
     border-style: ridge;
-    border-width: 0.1px;
+    border-width: 1px;
 }
 
 .square.blackTransition{
@@ -196,7 +203,7 @@ h2{
 }
 
 body{
-	background: #92e6e4;
+	background: #d2e6e5;
 }
 
 .slider {
