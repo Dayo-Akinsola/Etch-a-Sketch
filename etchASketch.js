@@ -5,54 +5,6 @@ const getRandomColor = () => {
     return '#' + randomColor;
 }
 
-//Event listeners to change grid dimensions and line thickness
-const changeSize = () => {
-    const sliders = document.querySelectorAll('.resize input');
-    const squares = document.querySelectorAll('.square');
-    sliders.forEach(slider => {
-        slider.addEventListener('input', (event) => {
-            if (event.target.id === 'gridSize'){
-                createGrid(parseInt(event.target.value));
-                document.querySelector('#dimensions p').textContent = `${event.target.value} x ${event.target.value}`;
-            }
-
-            if (event.target.id === 'borderWidth'){
-                squares.forEach(square => {
-                    square.style.borderWidth = `${event.target.value}px`;
-                    if (event.target.value === '1'){
-                        document.querySelector('#lineThickness p').textContent = `${event.target.value} pixel`
-                    }
-                    else{
-                        document.querySelector('#lineThickness p').textContent = `${event.target.value} pixels`
-                    }
-                })
-            }
-        })
-    })
-}
-
-
-
-// Creates a intxint grid
-const createGrid = (int) => {
-    const squares = document.querySelectorAll('.square');
-    squares.forEach(square => square.remove());
-    for (let i = 0; i < int*int; i++){
-        let div = document.createElement('div');
-        div.classList.add("square");
-        const container = document.querySelector('.container');
-        container.style.gridTemplateColumns = `repeat(${int}, 1fr)`;
-        container.style.gridTemplateRows = `repeat(${int}, 1fr)`;
-        container.appendChild(div);
-    }
-}
-
-
-
-
-let dimensionsChoice = 16;
-createGrid(dimensionsChoice);
-
 // Resets the colours back to white on the current grid
 const resetGrid = () => {
     const resetButton = document.querySelector('#resetButton');
@@ -65,8 +17,42 @@ const resetGrid = () => {
         });
     })
 }
-resetGrid();
 
+//Event listener to change grid dimensions
+const changeSize = () => {
+    colorChanges[color]();
+    const sliders = document.querySelectorAll('.resize input');
+    sliders.forEach(slider => {
+        slider.addEventListener('input', (event) => {
+            if (event.target.id === 'gridSize'){
+                createGrid(parseInt(event.target.value));
+                document.querySelector('#dimensions p').textContent = `${event.target.value} x ${event.target.value}`;
+            }
+        })
+    })
+
+}
+
+//Event listener to change line thickness
+const changeLineThickness = () => {
+    const sliders = document.querySelectorAll('.resize input');
+    const squares = document.querySelectorAll('.square');
+
+    sliders[1].addEventListener('input', (event) => {
+        squares.forEach(square => {
+            square.style.borderWidth = `${event.target.value}px`;
+        })
+            if (event.target.value === '1'){
+                document.querySelector('#lineThickness p').textContent = `${event.target.value} pixel`
+            }
+            else{
+                document.querySelector('#lineThickness p').textContent = `${event.target.value} pixels`
+            }
+            sliders[1].value = event.target.value;
+            console.log(event.target);
+            console.log(sliders[1].value);
+    })
+}
 
 //Changes the color of a box when hovered.
 const colorChangeBlack = () =>{
@@ -111,10 +97,49 @@ const changeColorChoice = () => {
     })
 }
 
-changeColorChoice();
 
+
+// Creates a intxint grid
+const createGrid = (int) => {
+    const squares = document.querySelectorAll('.square');
+    const sliders = document.querySelectorAll('.resize input');
+    sliders[1].value = 1;
+    document.querySelector('#lineThickness p').textContent = '1 pixel'
+    squares.forEach(square => square.remove());
+    for (let i = 0; i < int*int; i++){
+        let div = document.createElement('div');
+        div.classList.add("square");
+        const container = document.querySelector('.container');
+        container.style.gridTemplateColumns = `repeat(${int}, 1fr)`;
+        container.style.gridTemplateRows = `repeat(${int}, 1fr)`;
+        container.appendChild(div);
+    }
+    //Function added here so event listener can still fire when the grid dimensions are changed
+    changeLineThickness();
+    colorChanges[color]();
+    resetGrid();
+
+
+}
+
+
+
+
+let dimensionsChoice = 16;
+createGrid(dimensionsChoice);
+
+
+
+resetGrid();
+
+
+
+
+changeColorChoice();
+changeLineThickness();
 
 changeSize();
+
 colorChanges[color]();
 
 
